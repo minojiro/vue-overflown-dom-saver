@@ -1,0 +1,30 @@
+{
+  "name": "vue-overflown-dom-saver",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dist/vue-overflown-dom-saver.umd.js",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "build": "vite build && tsc",
+    "dev": "vitest",
+    "test": "vitest --run"
+  },
+  "keywords": [
+    "vue"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "vue": "^3.2.47"
+  },
+  "devDependencies": {
+    "@vue/test-utils": "^2.3.2",
+    "jsdom": "^21.1.1",
+    "typescript": "^5.0.3",
+    "vite": "^4.2.1",
+    "vitest": "^0.29.8"
+  }
+}
