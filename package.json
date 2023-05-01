@@ -2,7 +2,7 @@
   "name": "vue-overflown-dom-saver",
   "version": "0.0.0",
   "description": "",
-  "main": "dist/vue-overflown-dom-saver.umd.js",
+  "main": "dist/vue-overflown-dom-saver.mjs",
   "types": "dist/types/index.d.ts",
   "files": [
     "/dist"
