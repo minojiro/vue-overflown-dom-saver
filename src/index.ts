@@ -13,14 +13,6 @@ const DEFAULT_INITIAL_SIZE = 100;
 
 export const OverflownDomSaver = defineComponent({
   name: "OverflownDomSaver",
-  render() {
-    const children: VNode[] = [];
-    if (this.shown) {
-      const content = this.$slots.default()[0];
-      children.push(h(DIV, { ref: this.inner }, h(content)));
-    }
-    return [h(DIV, { style: this.outerStyle, ref: this.outer }, children)];
-  },
   props: {
     initialHeight: {
       type: Number,
@@ -31,7 +23,7 @@ export const OverflownDomSaver = defineComponent({
       default: DEFAULT_INITIAL_SIZE,
     },
   },
-  setup(props) {
+  setup(props, { slots }) {
     const shown = ref(false);
     const outer = ref<Element>();
     const inner = ref<Element>();
@@ -40,8 +32,8 @@ export const OverflownDomSaver = defineComponent({
       props.initialWidth,
     ]);
     const outerStyle = computed(() => ({
-      minHeight: shown ? 0 : `${lastInnerSize[0].value}px`,
-      minWidth: shown ? 0 : `${lastInnerSize[1].value}px`,
+      minHeight: shown.value ? 0 : `${lastInnerSize.value[0]}px`,
+      minWidth: shown.value ? 0 : `${lastInnerSize.value[1]}px`,
     }));
     const observer = new IntersectionObserver(
       ([{ isIntersecting, rootBounds }]) => {
@@ -58,11 +50,15 @@ export const OverflownDomSaver = defineComponent({
     );
     onMounted(() => observer.observe(outer.value as Element));
     onBeforeUnmount(() => observer.disconnect());
-    return {
-      inner,
-      outer,
-      outerStyle,
-      shown,
+
+    return () => {
+      const children: VNode[] = [];
+      if (shown.value) {
+        children.push(
+          h(DIV, { ref: inner }, slots.default ? slots.default() : [])
+        );
+      }
+      return [h(DIV, { style: outerStyle.value, ref: outer }, children)];
     };
   },
 });
